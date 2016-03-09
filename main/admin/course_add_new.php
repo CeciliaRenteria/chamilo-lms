@@ -30,7 +30,7 @@ if (api_is_multiple_url_enabled()) {
             ON (u.user_id=url_rel_user.user_id)
             WHERE url_rel_user.access_url_id=".api_get_current_access_url_id()." AND status=1".$order_clause;
 }
-
++
 $res = Database::query($sql);
 $teachers = array();
 while ($obj = Database::fetch_object($res)) {
@@ -42,14 +42,14 @@ $form = new FormValidator('update_course');
 $form->addElement('header', $tool_name);
 
 // Title
-$form->addText('title', get_lang('Title'), true);
+$form->addText('title', get_lang('CourseName'), true);
 $form->applyFilter('title', 'html_filter');
 $form->applyFilter('title', 'trim');
 
 // Descripción
-$form->addText('descripción', get_lang('Descripción'), false);
-$form->applyFilter('descripción', 'html_filter');
-$form->applyFilter('descripción', 'trim');
+$form->addText('description', 'Descripción', false);
+$form->applyFilter('description', 'html_filter');
+$form->applyFilter('description', 'trim');
 
 // Code
 $form->addText(
@@ -97,64 +97,18 @@ $form->addElement(
 );
 
 // Course department
-$form->addText('department_name', get_lang('CourseDepartment'), false, array ('size' => '60'));
+$form->addText('department_name', 'Área del curso', false, array ('size' => '60'));
 $form->applyFilter('department_name', 'html_filter');
 $form->applyFilter('department_name', 'trim');
-
-// Department URL
-$form->addText('department_url', get_lang('CourseDepartmentURL'), false, array ('size' => '60'));
-$form->applyFilter('department_url', 'html_filter');
-
-$form->addElement('select_language', 'course_language', get_lang('CourseLanguage'));
-$form->applyFilter('select_language', 'html_filter');
-
-/* */
-
-$group = array();
-$group[]= $form->createElement('radio', 'visibility', get_lang('CourseAccess'), get_lang('OpenToTheWorld'), COURSE_VISIBILITY_OPEN_WORLD);
-$group[]= $form->createElement('radio', 'visibility', null, get_lang('OpenToThePlatform'), COURSE_VISIBILITY_OPEN_PLATFORM);
-$group[]= $form->createElement('radio', 'visibility', null, get_lang('Private'), COURSE_VISIBILITY_REGISTERED);
-$group[]= $form->createElement('radio', 'visibility', null, get_lang('CourseVisibilityClosed'), COURSE_VISIBILITY_CLOSED);
-$group[]= $form->createElement('radio', 'visibility', null, get_lang('CourseVisibilityHidden'), COURSE_VISIBILITY_HIDDEN);
-
-$form->addGroup($group,'', get_lang('CourseAccess'), '<br />');
-
-$group = array();
-$group[]= $form->createElement('radio', 'subscribe', get_lang('Subscription'), get_lang('Allowed'), 1);
-$group[]= $form->createElement('radio', 'subscribe', null, get_lang('Denied'), 0);
-$form->addGroup($group,'', get_lang('Subscription'), '<br />');
-
-$group = array();
-$group[]= $form->createElement('radio', 'unsubscribe', get_lang('Unsubscription'), get_lang('AllowedToUnsubscribe'), 1);
-$group[]= $form->createElement('radio', 'unsubscribe', null, get_lang('NotAllowedToUnsubscribe'), 0);
-$form->addGroup($group, '', get_lang('Unsubscription'), '<br />');
-
-$form->addElement('text','disk_quota',array(get_lang('CourseQuota'), null, get_lang('MB')));
-$form->addRule('disk_quota', get_lang('ThisFieldShouldBeNumeric'), 'numeric');
-
-$obj = new GradeModel();
-$obj->fill_grade_model_select_in_form($form);
-
-//Extra fields
-$extra_field = new ExtraField('course');
-$extra = $extra_field->addElements($form);
-
-$htmlHeadXtra[] ='
-<script>
-
-$(function() {
-    '.$extra['jquery_ready_content'].'
-});
-</script>';
 
 $form->add_progress_bar();
 $form->addButtonCreate(get_lang('CreateCourse'));
 
 // Set some default values.
-$values['course_language'] = api_get_setting('platformLanguage');
+/*$values['course_language'] = api_get_setting('platformLanguage');
 $values['disk_quota'] = round(api_get_setting('default_document_quotum')/1024/1024, 1);
-
-$default_course_visibility = api_get_setting('courses_default_creation_visibility');
+*/
+/*$default_course_visibility = api_get_setting('courses_default_creation_visibility');
 
 if (isset($default_course_visibility)) {
     $values['visibility'] = api_get_setting('courses_default_creation_visibility');
@@ -163,7 +117,7 @@ if (isset($default_course_visibility)) {
 }
 $values['subscribe'] = 1;
 $values['unsubscribe'] = 0;
-$values['course_teachers'] = array(api_get_user_id());
+$values['course_teachers'] = array(api_get_user_id());*/
 
 $form->setDefaults($values);
 
@@ -172,9 +126,9 @@ if ($form->validate()) {
     $course = $form->exportValues();
 
     $course_teachers = isset($course['course_teachers']) ? $course['course_teachers'] : null;
-/*    $course['disk_quota'] = $course['disk_quota']*1024*1024;*/
     $course['exemplary_content'] = empty($course['exemplary_content']) ? false : true;
     $course['teachers'] = $course_teachers;
+    $course['course_description'] = $description;
     $course['wanted_code'] = $course['visual_code'];
     $course['gradebook_model_id']   = isset($course['gradebook_model_id']) ? $course['gradebook_model_id'] : null;
     // Fixing category code
