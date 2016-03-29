@@ -667,8 +667,8 @@ class Template
         $bowerJsFiles = [
             'modernizr/modernizr.js',
             'jquery/dist/jquery.min.js',
-            'bootstrap/dist/js/bootstrap.min.js',
             'jquery-ui/jquery-ui.min.js',
+            'bootstrap/dist/js/bootstrap.min.js',
             'moment/min/moment-with-locales.min.js',
             'ckeditor/ckeditor.js',
             'bootstrap-daterangepicker/daterangepicker.js',
@@ -934,6 +934,9 @@ class Template
         // }
         $count_unread_message = MessageManager::get_number_of_messages(true);
         $this->assign('count_unread_message', $count_unread_message);
+
+        $count_unread_news = 5;
+        $this->assign('count_unread_news', $count_unread_news);
 
         $total_invitations = 0;
         if (api_get_setting('allow_social_tool') == 'true') {

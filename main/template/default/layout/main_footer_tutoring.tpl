@@ -3,7 +3,7 @@
 {% endif %}
     <div class="modal fade" id="profile-modal" tabindex="-1" role="dialog" aria-labelledby="profile-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
-          <form action="{{ _p.web_main }}auth/profile_tutoring.php" method="POST" data-parsley-validate data-parsley-errors-messages-disabled data-parsley-ajax="true" data-parsley-ajax-success="parsleyAjaxClose">
+          <form action="{{ _p.web_main }}tutoring/alumn/profile.php" method="POST" data-parsley-validate data-parsley-errors-messages-disabled data-parsley-ajax="true" data-parsley-ajax-success="parsleyAjaxClose">
             <div class="modal-content">
               <div class="modal-header x-modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'Close' | get_lang }}">
@@ -31,6 +31,34 @@
               <h4 class="modal-title" id="messages-modal-label">Mensajes</h4>
             </div>
             <div class="modal-body" id="messages-modal-update"></div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="news-modal" tabindex="-1" role="dialog" aria-labelledby="news-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header x-modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'Close' | get_lang }}">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="news-modal-label">Novedades</h4>
+            </div>
+            <div class="modal-body" id="news-modal-update"></div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="subscribe-modal" tabindex="-1" role="dialog" aria-labelledby="subscribe-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header x-modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'Close' | get_lang }}">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="subscribe-modal-label">Suscribirte a una tutoría</h4>
+            </div>
+            <div class="modal-body" id="subscribe-modal-update"></div>
           </div>
         </div>
     </div>
